@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>belajar dan Mengenal Huruf Bahasa Jepang</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+      color: #1a1a1a;
+      overflow-x: hidden;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .sakura-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+      border-radius: 20px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 40px rgba(220, 20, 60, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '🌸';
+      position: absolute;
+      font-size: 100px;
+      opacity: 0.1;
+      top: -20px;
+      right: 50px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    header::after {
+      content: '🇯🇵';
+      position: absolute;
+      font-size: 80px;
+      opacity: 0.1;
+      bottom: -10px;
+      left: 50px;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    h1 {
+      color: #ffffff;
+      font-size: 48px;
+      margin: 0 0 15px 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      font-weight: bold;
+    }
+
+    .subtitle {
+      color: #ffffff;
+      font-size: 24px;
+      margin: 0 0 20px 0;
+      opacity: 0.95;
+    }
+
+    .description {
+      color: #ffffff;
+      font-size: 18px;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .section {
+      background: #ffffff;
+      border-radius: 15px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      border-left: 5px solid #dc143c;
+    }
+
+    .section-title {
+      color: #dc143c;
+      font-size: 32px;
+      margin: 0 0 25px 0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-weight: bold;
+    }
+
+    .section-title::before {
+      content: '🌸';
+      font-size: 36px;
+    }
+
+    .alphabet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .char-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+      border: 2px solid #dc143c;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .char-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(220, 20, 60, 0.3);
+      background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+    }
+
+    .char-card:hover .japanese {
+      color: #ffffff;
+    }
+
+    .char-card:hover .romaji {
+      color: #ffffff;
+    }
+
+    .japanese {
+      font-size: 28px;
+      font-weight: bold;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+    }
+
+    .romaji {
+      font-size: 14px;
+      color: #666666;
+    }
+
+    .vocab-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .vocab-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+      border: 2px solid #dc143c;
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .vocab-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(220, 20, 60, 0.3);
+      border-color: #8b0000;
+    }
+
+    .vocab-japanese {
+      font-size: 24px;
+      font-weight: bold;
+      color: #dc143c;
+      margin-bottom: 8px;
+    }
+
+    .vocab-romaji {
+      font-size: 16px;
+      color: #666666;
+      margin-bottom: 5px;
+    }
+
+    .vocab-indo {
+      font-size: 16px;
+      color: #1a1a1a;
+      font-weight: 500;
+    }
+
+    .interactive-section {
+      background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .interactive-section .section-title {
+      color: #ffffff;
+    }
+
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 30px;
+      margin-top: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .quiz-question {
+      font-size: 48px;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .quiz-btn {
+      background: #ffffff;
+      color: #dc143c;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 25px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .quiz-btn:hover {
+      background: #1a1a1a;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    .quiz-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .quiz-result {
+      font-size: 24px;
+      margin-top: 20px;
+      font-weight: bold;
+      min-height: 30px;
+    }
+
+    .new-quiz-btn {
+      background: #ffffff;
+      color: #dc143c;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 40px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .new-quiz-btn:hover {
+      background: #1a1a1a;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #1a1a1a;
+      color: #ffffff;
+      border-radius: 15px;
+      margin-top: 40px;
+      font-size: 16px;
+    }
+
+    .tab-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: #f5f5f5;
+      color: #1a1a1a;
+      border: 2px solid #dc143c;
+      border-radius: 10px;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      background: #dc143c;
+      color: #ffffff;
+    }
+
+    .tab-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(220, 20, 60, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 32px;
+      }
+
+      .subtitle {
+        font-size: 18px;
+      }
+
+      .description {
+        font-size: 16px;
+      }
+
+      .section {
+        padding: 25px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .alphabet-grid {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: 10px;
+      }
+
+      .vocab-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <svg class="sakura-bg" xmlns="http://www.w3.org/2000/svg"><defs>
+    <pattern id="sakura-pattern" x="0" y="0" width="200" height="200" patternunits="userSpaceOnUse">
+     <circle cx="50" cy="50" r="3" fill="#dc143c" opacity="0.3" />
+     <circle cx="150" cy="100" r="2" fill="#dc143c" opacity="0.3" />
+     <circle cx="100" cy="150" r="2.5" fill="#dc143c" opacity="0.3" />
+    </pattern>
+   </defs> <rect width="100%" height="100%" fill="url(#sakura-pattern)" />
+  </svg>
+  <div class="container">
+   <header>
+    <h1 id="main-title">belajar & Mengenal Huruf Bahasa Jepang</h1>
+    <div class="subtitle" id="subtitle">
+     Panduan Lengkap untuk Pemula
+    </div>
+    <p class="description" id="description">Pelajari Hiragana, Katakana, dan Kanji dasar dengan mudah. Mulai perjalanan Anda menguasai bahasa Jepang dari dasar hingga mahir!</p>
+   </header>
+   <div class="section">
+    <h2 class="section-title">Pengenalan Huruf Jepang</h2>
+    <div class="tab-container"><button class="tab-btn active" onclick="showAlphabet('hiragana')">Hiragana</button> <button class="tab-btn" onclick="showAlphabet('katakana')">Katakana</button>
+    </div>
+    <div id="alphabet-container" class="alphabet-grid"></div>
+   </div>
+   <div class="section">
+    <h2 class="section-title">pesan untuk kamu</h2>
+    <div class="vocab-list" id="vocab-list">- Belajar bahasa itu seperti menanam pohon — hasilnya tidak instan, tapi akan indah pada waktunya.</div>
+      <div class="vocab-list" id="vocab-list">- Jangan menyerah, setiap kata baru adalah langkah menuju impianmu!.</div>
+        <div class="vocab-list" id="vocab-list">- Bahasa Jepang itu sulit? Justru itu yang membuatnya keren!</div>
+          <div class="vocab-list" id="vocab-list"> - (がんばって！)
+Artinya: Semangaaat! Lakukan yang terbaik!!!</div>
+</div>
+      <div class="section">
+    <h2 class="section-title">note:</h2>
+    <div class="vocab-list" id="vocab-list">- web ini masih dalam perkembangan</div>
+      <div class="vocab-list" id="vocab-list">- jika menemukan bug pada web ini,mohon hubungi akun tiktok @RIINEED1MS</div>
+        <div class="vocab-list" id="vocab-list">- mohon kirim saran dan kritik untuk web saya</div>
+          <div class="vocab-list" id="vocab-list">- semoga web ini berguna bagi kalian semua</div>
+          <div class="vocab-list" id="vocab-list">- untuk fitur hafalan katakana masih dikembangkan 😁</div>
+</div>
+   <div class="section interactive-section">
+    <h2 class="section-title">melatih hafalan anda</h2>
+    <div class="quiz-container">
+     <div class="quiz-question" id="quiz-question">
+      hiragana
+     </div>
+     <div class="quiz-options" id="quiz-options"></div>
+     <div class="quiz-result" id="quiz-result"></div><button class="new-quiz-btn" id="new-quiz-btn" onclick="generateQuiz()">lanjut</button>
+    </div>
+   </div>
+   <footer id="footer-text">
+    Created by RIINEEDMS - ©2025
+   </footer>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: "Mengenal Huruf dan kata Bahasa Jepang",
+      subtitle: "Panduan Lengkap untuk Pemula",
+      description: "Pelajari Hiragana, Katakana, dan Kanji dasar dengan mudah. Mulai perjalanan Anda menguasai bahasa Jepang dari dasar hingga mahir!",
+      footer_text: "Created by RIINEEDMS - ©2025",
+      background_color: "#ffffff",
+      primary_color: "#dc143c",
+      text_color: "#1a1a1a",
+      secondary_color: "#8b0000",
+      surface_color: "#f5f5f5"
+    };
+
+    const hiraganaData = [
+      {char: 'あ', romaji: 'a'}, {char: 'い', romaji: 'i'}, {char: 'う', romaji: 'u'}, {char: 'え', romaji: 'e'}, {char: 'お', romaji: 'o'},
+      {char: 'か', romaji: 'ka'}, {char: 'き', romaji: 'ki'}, {char: 'く', romaji: 'ku'}, {char: 'け', romaji: 'ke'}, {char: 'こ', romaji: 'ko'},
+      {char: 'さ', romaji: 'sa'}, {char: 'し', romaji: 'shi'}, {char: 'す', romaji: 'su'}, {char: 'せ', romaji: 'se'}, {char: 'そ', romaji: 'so'},
+      {char: 'た', romaji: 'ta'}, {char: 'ち', romaji: 'chi'}, {char: 'つ', romaji: 'tsu'}, {char: 'て', romaji: 'te'}, {char: 'と', romaji: 'to'},
+      {char: 'な', romaji: 'na'}, {char: 'に', romaji: 'ni'}, {char: 'ぬ', romaji: 'nu'}, {char: 'ね', romaji: 'ne'}, {char: 'の', romaji: 'no'},
+      {char: 'は', romaji: 'ha'}, {char: 'ひ', romaji: 'hi'}, {char: 'ふ', romaji: 'fu'}, {char: 'へ', romaji: 'he'}, {char: 'ほ', romaji: 'ho'},
+      {char: 'ま', romaji: 'ma'}, {char: 'み', romaji: 'mi'}, {char: 'む', romaji: 'mu'}, {char: 'め', romaji: 'me'}, {char: 'も', romaji: 'mo'},
+      {char: 'や', romaji: 'ya'}, {char: 'ゆ', romaji: 'yu'}, {char: 'よ', romaji: 'yo'},
+      {char: 'ら', romaji: 'ra'}, {char: 'り', romaji: 'ri'}, {char: 'る', romaji: 'ru'}, {char: 'れ', romaji: 're'}, {char: 'ろ', romaji: 'ro'},
+      {char: 'わ', romaji: 'wa'}, {char: 'を', romaji: 'wo'}, {char: 'ん', romaji: 'n'}
+    ];
+
+    const katakanaData = [
+      {char: 'ア', romaji: 'a'}, {char: 'イ', romaji: 'i'}, {char: 'ウ', romaji: 'u'}, {char: 'エ', romaji: 'e'}, {char: 'オ', romaji: 'o'},
+      {char: 'カ', romaji: 'ka'}, {char: 'キ', romaji: 'ki'}, {char: 'ク', romaji: 'ku'}, {char: 'ケ', romaji: 'ke'}, {char: 'コ', romaji: 'ko'},
+      {char: 'サ', romaji: 'sa'}, {char: 'シ', romaji: 'shi'}, {char: 'ス', romaji: 'su'}, {char: 'セ', romaji: 'se'}, {char: 'ソ', romaji: 'so'},
+      {char: 'タ', romaji: 'ta'}, {char: 'チ', romaji: 'chi'}, {char: 'ツ', romaji: 'tsu'}, {char: 'テ', romaji: 'te'}, {char: 'ト', romaji: 'to'},
+      {char: 'ナ', romaji: 'na'}, {char: 'ニ', romaji: 'ni'}, {char: 'ヌ', romaji: 'nu'}, {char: 'ネ', romaji: 'ne'}, {char: 'ノ', romaji: 'no'},
+      {char: 'ハ', romaji: 'ha'}, {char: 'ヒ', romaji: 'hi'}, {char: 'フ', romaji: 'fu'}, {char: 'ヘ', romaji: 'he'}, {char: 'ホ', romaji: 'ho'},
+      {char: 'マ', romaji: 'ma'}, {char: 'ミ', romaji: 'mi'}, {char: 'ム', romaji: 'mu'}, {char: 'メ', romaji: 'me'}, {char: 'モ', romaji: 'mo'},
+      {char: 'ヤ', romaji: 'ya'}, {char: 'ユ', romaji: 'yu'}, {char: 'ヨ', romaji: 'yo'},
+      {char: 'ラ', romaji: 'ra'}, {char: 'リ', romaji: 'ri'}, {char: 'ル', romaji: 'ru'}, {char: 'レ', romaji: 're'}, {char: 'ロ', romaji: 'ro'},
+      {char: 'ワ', romaji: 'wa'}, {char: 'ヲ', romaji: 'wo'}, {char: 'ン', romaji: 'n'}
+    ];
+
+    const vocabData = [
+      {jp: 'こんにちは', romaji: 'konnichiwa', indo: 'Halo / Selamat siang'},
+      {jp: 'ありがとう', romaji: 'arigatou', indo: 'Terima kasih'},
+      {jp: 'さようなら', romaji: 'sayounara', indo: 'Selamat tinggal'},
+      {jp: 'おはよう', romaji: 'ohayou', indo: 'Selamat pagi'},
+      {jp: 'すみません', romaji: 'sumimasen', indo: 'Maaf / Permisi'},
+      {jp: 'はい', romaji: 'hai', indo: 'Ya'},
+      {jp: 'いいえ', romaji: 'iie', indo: 'Tidak'},
+      {jp: 'いち', romaji: 'ichi', indo: 'Satu'},
+      {jp: 'に', romaji: 'ni', indo: 'Dua'},
+      {jp: 'さん', romaji: 'san', indo: 'Tiga'},
+      {jp: 'あか', romaji: 'aka', indo: 'Merah'},
+      {jp: 'あお', romaji: 'ao', indo: 'Biru'},
+      {jp: 'しろ', romaji: 'shiro', indo: 'Putih'},
+      {jp: 'くろ', romaji: 'kuro', indo: 'Hitam'},
+      {jp: 'みず', romaji: 'mizu', indo: 'Air'},
+      {jp: 'ごはん', romaji: 'gohan', indo: 'Nasi'}
+    ];
+
+    let currentAlphabet = 'hiragana';
+    let currentQuiz = null;
+
+    function showAlphabet(type) {
+      currentAlphabet = type;
+      const data = type === 'hiragana' ? hiraganaData : katakanaData;
+      const container = document.getElementById('alphabet-container');
+      
+      container.innerHTML = data.map(item => `
+        <div class="char-card">
+          <div class="japanese">${item.char}</div>
+          <div class="romaji">${item.romaji}</div>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    }
+
+    function loadVocab() {
+      const container = document.getElementById('vocab-list');
+      container.innerHTML = vocabData.map(item => `
+        <div class="vocab-card">
+          <div class="vocab-japanese">${item.jp}</div>
+          <div class="vocab-romaji">${item.romaji}</div>
+          <div class="vocab-indo">${item.indo}</div>
+        </div>
+      `).join('');
+    }
+
+    function generateQuiz() {
+      const data = hiraganaData;
+      const correctAnswer = data[Math.floor(Math.random() * data.length)];
+      const wrongAnswers = [];
+      
+      while (wrongAnswers.length < 3) {
+        const wrong = data[Math.floor(Math.random() * data.length)];
+        if (wrong.romaji !== correctAnswer.romaji && !wrongAnswers.find(w => w.romaji === wrong.romaji)) {
+          wrongAnswers.push(wrong);
+        }
+      }
+
+      const allOptions = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
+      
+      currentQuiz = {
+        correct: correctAnswer,
+        options: allOptions
+      };
+
+      document.getElementById('quiz-question').textContent = correctAnswer.char;
+      document.getElementById('quiz-result').textContent = '';
+      
+      const optionsContainer = document.getElementById('quiz-options');
+      optionsContainer.innerHTML = allOptions.map(option => `
+        <button class="quiz-btn" onclick="checkAnswer('${option.romaji}')">${option.romaji}</button>
+      `).join('');
+    }
+
+    function checkAnswer(selected) {
+      const resultDiv = document.getElementById('quiz-result');
+      const buttons = document.querySelectorAll('.quiz-btn');
+      
+      buttons.forEach(btn => btn.disabled = true);
+      
+      if (selected === currentQuiz.correct.romaji) {
+        resultDiv.textContent = '🎉 Benar! kamu Hebat..😁';
+        resultDiv.style.color = '#ffffff';
+      } else {
+        resultDiv.textContent = `❌ Salah. Jawaban yang benar: ${currentQuiz.correct.romaji}`;
+        resultDiv.style.color = '#ffcccc';
+      }
+    }
+
+    async function onConfigChange(config) {
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+      document.getElementById('description').textContent = config.description || defaultConfig.description;
+      document.getElementById('footer-text').textContent = config.footer_text || defaultConfig.footer_text;
+
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+
+      document.body.style.background = `linear-gradient(135deg, ${bgColor} 0%, ${surfaceColor} 100%)`;
+      
+      const header = document.querySelector('header');
+      header.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+
+      document.querySelectorAll('.section-title').forEach(el => {
+        el.style.color = primaryColor;
+      });
+
+      document.querySelectorAll('.section').forEach(el => {
+        el.style.borderLeftColor = primaryColor;
+      });
+
+      document.querySelectorAll('.char-card').forEach(el => {
+        el.style.borderColor = primaryColor;
+      });
+
+      document.querySelectorAll('.vocab-card').forEach(el => {
+        el.style.borderColor = primaryColor;
+      });
+
+      document.querySelectorAll('.vocab-japanese').forEach(el => {
+        el.style.color = primaryColor;
+      });
+
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.style.borderColor = primaryColor;
+        el.style.color = textColor;
+      });
+
+      document.querySelectorAll('.tab-btn.active').forEach(el => {
+        el.style.background = primaryColor;
+        el.style.color = bgColor;
+      });
+
+      const interactiveSection = document.querySelector('.interactive-section');
+      interactiveSection.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+
+      document.querySelectorAll('.quiz-btn').forEach(el => {
+        el.style.background = bgColor;
+        el.style.color = primaryColor;
+      });
+
+      document.querySelector('.new-quiz-btn').style.background = bgColor;
+      document.querySelector('.new-quiz-btn').style.color = primaryColor;
+
+      document.querySelector('footer').style.background = textColor;
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["main_title", config.main_title || defaultConfig.main_title],
+          ["subtitle", config.subtitle || defaultConfig.subtitle],
+          ["description", config.description || defaultConfig.description],
+          ["footer_text", config.footer_text || defaultConfig.footer_text]
+        ])
+      });
+    }
+
+    showAlphabet('hiragana');
+    loadVocab();
+    generateQuiz();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99d5bf9e35b9a07a',t:'MTc2Mjk0NzU2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
